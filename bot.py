@@ -2,6 +2,8 @@ import os
 import random
 import discord
 from discord.ext import commands
+import datetime
+dt = datetime.datetime.now()
 
 from dotenv import load_dotenv
 file_path = '.\mat_lista.txt'
@@ -29,10 +31,10 @@ async def on_ready():
 async def on_member_join(member):
     await member.create_dm()
     await member.dm_channel.send(
-        f'Hi {member.name}, welcome to my Discord server!'
+        f'Hi {member.name}, welcome to {guild.name}'
     )
 
-@client.command(name='mat', help='Visar skol maten för den angivna rotationen. 1-5 ')
+@client.command(name='mat' or 'Mat', help='Visar maten för den angivna rotationen. 1-5 eller alla.')
 async def mat(ctx, mat_vecka):
     with open(file_path,'r', encoding='utf-8') as mat_lista:
         mat_lista_data = [line.rstrip() for line in mat_lista]
@@ -56,7 +58,18 @@ async def mat(ctx, mat_vecka):
             for i in range(24,30):
                 response = mat_lista_data[i]
                 await ctx.send(response)
+        elif mat_vecka == "alla" or "Alla":
+            for i in mat_lista_data:
+                response = i
+                await ctx.send(response)
+
         else:
-            response = 'Opps something went wrong, try enter a rotation number.'
+            response = 'Opps something went wrong, try enter a rotation number. You can do !help for help.'
+            await ctx.send(response)
+
+@client.command(name='date', help='Visar datum, tid, vecka och veckodag.')
+async def date(ctx):
+    date = dt.strftime("%Y-%m-%d %H:%M Vecka: %W Veckodag: %A")
+    await ctx.send(date)
 
 client.run(TOKEN)
