@@ -34,34 +34,46 @@ async def on_member_join(member):
         f'Hi {member.name}, welcome to {guild.name}'
     )
 
-@client.command(name='mat' or 'Mat', help='Visar maten för den angivna rotationen. 1-5 eller alla.')
+@client.command(name='mat', help='Visar maten för den angivna rotationen. 1-5 eller alla.')
 async def mat(ctx, mat_vecka):
     with open(file_path,'r', encoding='utf-8') as mat_lista:
         mat_lista_data = [line.rstrip() for line in mat_lista]
         if mat_vecka == "1":
+            response = ""
             for i in range(0,6):
-                response = mat_lista_data[i]
-                await ctx.send(response)
+                response += mat_lista_data[i]
+                response += '\n'
+            await ctx.send(response)
         elif mat_vecka == "2":
+            response = ""
             for i in range(6,12):
-                response = mat_lista_data[i]
-                await ctx.send(response)
+                response += mat_lista_data[i]
+                response += '\n'
+            await ctx.send(response)
         elif mat_vecka == "3":
+            response = ""
             for i in range(12,18):
-                response = mat_lista_data[i]
-                await ctx.send(response)
+                response += mat_lista_data[i]
+                response += '\n'
+            await ctx.send(response)
         elif mat_vecka == "4":
+            response = ""
             for i in range(18,24):
-                response = mat_lista_data[i]
-                await ctx.send(response)
+                response += mat_lista_data[i]
+                response += '\n'
+            await ctx.send(response)
         elif mat_vecka == "5":
+            response = ""
             for i in range(24,30):
-                response = mat_lista_data[i]
-                await ctx.send(response)
-        elif mat_vecka == "alla" or "Alla":
+                response += mat_lista_data[i]
+                response += '\n'
+            await ctx.send(response)
+        elif mat_vecka == "alla":
+            response = ""
             for i in mat_lista_data:
-                response = i
-                await ctx.send(response)
+                response += i
+                response += '\n'
+            await ctx.send(response)
 
         else:
             response = 'Opps something went wrong, try enter a rotation number. You can do !help for help.'
@@ -69,7 +81,10 @@ async def mat(ctx, mat_vecka):
 
 @client.command(name='date', help='Visar datum, tid, vecka och veckodag.')
 async def date(ctx):
-    date = dt.strftime("%Y-%m-%d %H:%M Vecka: %W Veckodag: %A")
+    #date = dt.strftime("%Y-%m-%d \n%H:%M \nVecka: %W \nVeckodag: %A")
+    date = datetime.datetime.today().isocalendar()
+    date = date[1]
     await ctx.send(date)
+
 
 client.run(TOKEN)
