@@ -79,12 +79,17 @@ async def mat(ctx, mat_vecka):
             response = 'Opps something went wrong, try enter a rotation number. You can do !help for help.'
             await ctx.send(response)
 
-@client.command(name='date', help='Visar datum, tid, vecka och veckodag.')
-async def date(ctx):
-    #date = dt.strftime("%Y-%m-%d \n%H:%M \nVecka: %W \nVeckodag: %A")
-    date = datetime.datetime.today().isocalendar()
-    date = date[1]
-    await ctx.send(date)
+@client.command(name='week', help='Visar datum, tid, vecka och veckodag.')
+async def week(ctx):
+    #week = dt.strftime("%Y-%m-%d \n%H:%M \nVecka: %W \nVeckodag: %A")
+    week = datetime.datetime.today().isocalendar()
+    week = week[1]
+    await ctx.send(week)
+
+@client.command(name='smile',help='😎')
+async def smile(ctx):
+    smile = '😎'
+    await ctx.send(smile)
 
 
 client.run(TOKEN)
