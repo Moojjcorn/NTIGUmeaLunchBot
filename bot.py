@@ -3,6 +3,7 @@ import random
 import discord
 from discord.ext import commands
 import datetime
+from discord.ext.commands.core import guild_only
 dt = datetime.datetime.now()
 
 from dotenv import load_dotenv
@@ -30,9 +31,7 @@ async def on_ready():
 @client.event
 async def on_member_join(member):
     await member.create_dm()
-    await member.dm_channel.send(
-        f'Hi {member.name}, welcome to {guild.name}'
-    )
+    await member.dm_channel.send(f'Hi {member.name}, welcome to {member.guild.name}')
 
 @client.command(name='mat', help='Visar maten för den angivna rotationen. 1-5 eller alla.')
 async def mat(ctx, mat_vecka):
